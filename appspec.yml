@@ -1,0 +1,37 @@
+version: 0.0
+os: linux
+
+files:
+  - source: appspec.yml
+    destination: /home/ec2-user/
+  - source: scripts/install_docker.sh
+    destination: /home/ec2-user/
+  - source: scripts/deploy_frontend.sh
+    destination: /home/ec2-user/
+  - source: scripts/restart_docker.sh
+    destination: /home/ec2-user/
+
+hooks:
+  BeforeInstall:
+    - location: scripts/install_docker.sh
+      input: "chmod +x /home/ec2-user/scripts/install_docker.sh
+      timeout: 300
+      runas: root
+    - location: scripts/deploy_frontend.sh
+      input: "chmod +x /home/ec2-user/scripts/deploy_frontend.sh"
+      timeout: 60
+      runas: root
+    - location: scripts/restart_docker.sh
+      input: "chmod +x /home/ec2-user/scripts/restart_docker.sh"
+      timeout: 60
+      runas: root
+
+  AfterInstall:
+    - location: scripts/deploy_frontend.sh
+      timeout: 300
+      runas: root
+
+  ApplicationStart:
+    - location: scripts/restart_docker.sh
+      timeout: 300
+      runas: root
