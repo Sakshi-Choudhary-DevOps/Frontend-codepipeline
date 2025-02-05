@@ -39,7 +39,7 @@ phases:
       - ls dist
       - echo "Building Docker image..."
       # Building the Docker image for the React app
-      - docker build -t 7276829907/frontend-image:latest .
+      - docker build -t sakshichoudhary2001/frontend-image:latest .
 
   post_build:
     commands:
@@ -48,8 +48,8 @@ phases:
       - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
       - echo "Pushing Docker image to Docker Hub..."
       # Tagging and pushing the Docker image to Docker Hub
-      - docker tag 7276829907/frontend-image:latest 7276829907/frontend-image:latest
-      - docker push 7276829907/frontend-image:latest
+      - docker tag sakshichoudhary2001/frontend-image:latest sakshichoudhary2001/frontend-image:latest
+      - docker push sakshichoudhary2001/frontend-image:latest
       - echo "Docker image pushed successfully."
 
 artifacts:
